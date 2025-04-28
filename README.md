@@ -1,7 +1,7 @@
 # Generate-Markov-Driving-Cycles
 
 这是研究生期间完成的工作，用于生成具有代表性的地区工况。  
-这些代码还原了Lin等人的研究工作：  
+这些代码在Lin等人的研究基础上，又迈出了一小步：  
 **Estimating regional air quality vehicle emission inventories: constructing robust driving cycles**.
 
 ---
@@ -44,7 +44,46 @@
     road_power            # 平均VSP
     rms_acceleration      # RPA
     ```
-- **`generate_character`**  
+#### 主要类
+- **`into_bins`**  
+  是主类，用来完成迭代循环的主要类。
+  - **输入的外部参数**:  
+    
+    `origin_data`:经过处理后的原始数据。
+    
+    `total_frequency_df`:原始数据的频率矩阵。在其他地方处理。
+    
+    `database_character`:原始数据的运动学特征。在其他地方处理。
+  - **输出**:  
+    地方工况。
+  - **主要方法**  
+  执行流程:  
+![image](https://github.com/user-attachments/assets/046ba316-1762-4e86-afd1-e66baeda5d98)
+    - **`into_bins`**  
+       用来将原始的df按照提前划分好的类切成小块  
+      - **返回**：切分后的小seg，储存在内存中。  
+    
+    - **`apply_character_cluster`**  
+      将切割后的片段聚类。  
+      average_speed => 平均速度  
+      maximum_speed => 最大速度  
+      minimum_speed => 最小速度  
+      acceleration_rates => 加速度不为0所占时间  
+      - **返回**：不同片段所对应的类别
+    
+    - **`generate_markov_array_1d`**  
+      生成状态转移矩阵  
+      - **返回**：  
+      生成的马尔科夫矩阵。在循环迭代时，依据这个矩阵中的概率，加权抽取下一个类别，紧接着，就从状态中筛选合适的片段。  
+    - **`generate_driving_cycle_1d`**  
+      是迭代用的方法。**是最核心的迭代函数**  
+      执行的核心逻辑：  
+      1.选取开始片段。start_list包含了所有可能的初始片段，再从中抽取一个做为开始片段。  
+      2.选取合适的类别。通过状态转移矩阵，加权抽取下一个类别  
+      3.计算最佳损失。将所有合适的片段都添加到原始工况上，生成多个不同的备选工况，再计算所有备选工况的rank，通过这个rank来决定最佳片段。  
+      4.重复1-3，直至满足预设条件。（比如长度达到1800时，停止迭代）
+      - **返回**：  
+      一条具有代表性的地区工况。
 ---
 
 ### (2) `main.py`
