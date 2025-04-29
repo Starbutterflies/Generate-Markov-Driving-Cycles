@@ -1,0 +1,13 @@
+{
+    "max_speed_matrix": 116.98768,
+    "avg_speed_matrix": 25.964456327004836,
+    "avg_running_speed_matrix ": 33.43043889328657,
+    "positive_acceleration_matrix": 1.3521210522809362,
+    "neg_dec_matrix": -1.4015952844475847,
+    "idle_SPEED_ratio_matrix": 0.22332888270219595,
+    "acceleration_ratio_matrix": 0.3778046078236414,
+    "dec_ratio_matrix ": 0.36448396352376355,
+    "road_power_matrix": 10.557273066907179,
+    "rms_acceleration_matrix": 3.1872927433788627,
+    "SAFD": 7.464363667637232e-14
+}
