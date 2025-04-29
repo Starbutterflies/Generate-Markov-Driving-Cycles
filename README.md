@@ -111,5 +111,23 @@
 ---
 
 ### (3) `utils.py`
-
 工具函数文件。
+#### 主要函数  ****
+- **`generate_safd`**  
+  用来生成frequency_df,进而计算SAFD  
+  - **参数**：  
+    `df`：用于生成frequency_df的数据。  
+  - **返回**：frequency_df,网格化（比如说v 1,2,3,4...40m/s a 0.1,0.2,0.3...m/s2）的不同v-a 网络  
+
+- **`cal_total_loss`**  
+  计算SAFD的直接函数  
+  - **参数**：  
+    `df`：用于生成frequency_df的数据。  
+  - **返回**：frequency_df,网格化（比如说v 1,2,3,4...40m/s a 0.1,0.2,0.3...m/s2）的不同v-a 网络  
+
+- **`generate_new_characters`**  
+  计算14个参数的函数集合  
+  - **参数**：  
+    `df`：用于计算loss的片段  
+    `Frequency_df`：原始数据的频率分布，用于计算SAFD  
+  - **返回**：所有的14个参数。被在主函数中的generate_characters取代。
